@@ -25,6 +25,7 @@ class CourseDetails(object):
         self.enrollment_start = None
         self.enrollment_end = None
         self.syllabus = None  # a pdf file asset
+        self.short_description = ""
         self.overview = ""  # html to render as the overview
         self.intro_video = None  # a video pointer
         self.effort = None  # int hours/week
@@ -50,6 +51,12 @@ class CourseDetails(object):
         temploc = course_old_location.replace(category='about', name='syllabus')
         try:
             course.syllabus = get_modulestore(temploc).get_item(temploc).data
+        except ItemNotFoundError:
+            pass
+
+        temploc = course_old_location.replace(category='about', name='short_description')
+        try:
+            course.short_description = get_modulestore(temploc).get_item(temploc).data
         except ItemNotFoundError:
             pass
 
@@ -140,6 +147,9 @@ class CourseDetails(object):
         # to make faster, could compare against db or could have client send over a list of which fields changed.
         temploc = Location(course_old_location).replace(category='about', name='syllabus')
         update_item(temploc, jsondict['syllabus'])
+
+        temploc = temploc.replace(category='about', name='short_description')
+        update_item(temploc, jsondict['short_description'])
 
         temploc = temploc.replace(name='overview')
         update_item(temploc, jsondict['overview'])
