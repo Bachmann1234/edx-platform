@@ -329,7 +329,12 @@ class @MarkdownEditingDescriptor extends XModule.Descriptor
 
           return selectString;
       });
-
+      
+      // replace labels
+      xml = xml.replace(/::(.*)::([\s\S]+?)<(textline|optioninput|formulaequationinput|choicegroup|checkboxgroup)/gm, function(match, p1, p2, p3){
+              return p1 + '\n' + p2 + '<' + p3 + ' label="' + p1.replace('"', '\\"') + '"';
+      });
+            
       // replace code blocks
       xml = xml.replace(/\[code\]\n?([^\]]*)\[\/?code\]/gmi, function(match, p1) {
           var selectString = '<pre><code>\n' + p1 + '</code></pre>';

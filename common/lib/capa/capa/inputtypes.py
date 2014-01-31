@@ -335,6 +335,7 @@ class OptionInput(InputTypeBase):
         Convert options to a convenient format.
         """
         return [Attribute('options', transform=cls.parse_options),
+                Attribute('label', ''),
                 Attribute('inline', False)]
 
 #-----------------------------------------------------------------------------
@@ -388,6 +389,7 @@ class ChoiceGroup(InputTypeBase):
     @classmethod
     def get_attributes(cls):
         return [Attribute("show_correctness", "always"),
+                Attribute('label', ''),
                 Attribute("submitted_message", "Answer received.")]
 
     def _extra_context(self):
@@ -551,7 +553,7 @@ class TextLine(InputTypeBase):
         """
         return [
             Attribute('size', None),
-
+            Attribute('label', ''),
 
             Attribute('hidden', False),
             Attribute('inline', False),
@@ -612,6 +614,7 @@ class FileSubmission(InputTypeBase):
         Convert the list of allowed files to a convenient format.
         """
         return [Attribute('allowed_files', '[]', transform=cls.parse_files),
+                Attribute('label', ''),
                 Attribute('required_files', '[]', transform=cls.parse_files), ]
 
     def setup(self):
@@ -898,6 +901,7 @@ class Schematic(InputTypeBase):
             Attribute('analyses', None),
             Attribute('initial_value', None),
             Attribute('submit_analyses', None),
+            Attribute('label', ''),
         ]
 
 
@@ -926,6 +930,7 @@ class ImageInput(InputTypeBase):
         """
         return [Attribute('src'),
                 Attribute('height'),
+                Attribute('label', ''),
                 Attribute('width'), ]
 
     def setup(self):
@@ -1016,7 +1021,8 @@ class ChemicalEquationInput(InputTypeBase):
         """
         Can set size of text field.
         """
-        return [Attribute('size', '20'), ]
+        return [Attribute('size', '20'),             
+                Attribute('label', ''),]
 
     def _extra_context(self):
         """
@@ -1094,6 +1100,7 @@ class FormulaEquationInput(InputTypeBase):
         return [
             Attribute('size', '20'),
             Attribute('inline', False),
+            Attribute('label', ''),
         ]
 
     def _extra_context(self):
@@ -1575,7 +1582,8 @@ class ChoiceTextGroup(InputTypeBase):
         """
         return [
             Attribute("show_correctness", "always"),
-            Attribute("submitted_message", "Answer received.")
+            Attribute("submitted_message", "Answer received."),
+            Attribute("label", ""),
         ]
 
     def _extra_context(self):
